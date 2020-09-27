@@ -99,39 +99,63 @@ The algorithm find a vertex v that, when moved the other group, will give the **
 ***pseudo-code*** *Algorithm 4 improve a 2-division of the network*
 **Input:** s- a <img src="https://render.githubusercontent.com/render/math?math=\pm"> 1 vector representing the initial 2-division of a network with <img src="https://render.githubusercontent.com/render/math?math=n_g"> vertices
 1. **repeat**
+
 2. Unmoved <img src="https://render.githubusercontent.com/render/math?math=\leftarrow\{0,1,...,n_g-1\}">
+
 3. <img src="https://render.githubusercontent.com/render/math?math=x\leftarrow{B[g]s}">
-  3.1. **for** <img src="https://render.githubusercontent.com/render/math?math=i=0"> to <img src="https://render.githubusercontent.com/render/math?math=n_g-1"> **do**
-  3.1.1. <img src="https://render.githubusercontent.com/render/math?math=score[i] \leftarrow{-2(s_ix_i+\frac{k_i^2}{M})}"> 
-  3.2. **end for**
+
+3.1. **for** <img src="https://render.githubusercontent.com/render/math?math=i=0"> to <img src="https://render.githubusercontent.com/render/math?math=n_g-1"> **do**
+
+3.1.1. <img src="https://render.githubusercontent.com/render/math?math=score[i] \leftarrow{-2(s_ix_i+\frac{k_i^2}{M})}"> 
+
+3.2. **end for**
 
 4. <img src="https://render.githubusercontent.com/render/math?math=j'\leftarrow{argmax\{score[j]:j\in{Unmoved}\}}">
 
-  4.1. <img src="https://render.githubusercontent.com/render/math?math=s_{j'}=-s_{j'}">
-  4.2. <img src="https://render.githubusercontent.com/render/math?math=improve[i]\leftarrow{score[j']}">
-  4.3. <img src="https://render.githubusercontent.com/render/math?math=Unmoved\leftarrow{Unmoved/\{j'\}}">
+4.1. <img src="https://render.githubusercontent.com/render/math?math=s_{j'}=-s_{j'}">
+
+4.2. <img src="https://render.githubusercontent.com/render/math?math=improve[i]\leftarrow{score[j']}">
+ 
+4.3. <img src="https://render.githubusercontent.com/render/math?math=Unmoved\leftarrow{Unmoved/\{j'\}}">
 
 5. **for** <img src="https://render.githubusercontent.com/render/math?math=i=1"> to <img src="https://render.githubusercontent.com/render/math?math=n_g-1"> **do**
+  
   5.1. **for all** <img src="https://render.githubusercontent.com/render/math?math=k\in{Unmoved}"> **do**
+  
   5.1.1. <img src="https://render.githubusercontent.com/render/math?math=score[i]\leftarrow{score[i]-4s_is_{j'}B[g]_{ij'}}">
+  
   5.2. **end for**
 
+  
   5.3. <img src="https://render.githubusercontent.com/render/math?math=j'\leftarrow{argmax\{score[j]:j\in{Unmoved}\}}">
+  
   5.4. <img src="https://render.githubusercontent.com/render/math?math=s_{j'}=-s_{j'}">
+  
   5.5. <img src="https://render.githubusercontent.com/render/math?math=improve[i]\leftarrow{improve[i-1]+score[j']}">
+  
   5.6. <img src="https://render.githubusercontent.com/render/math?math=Unmoved\leftarrow{Unmoved/\{j'\}}">
 
 6. **end for**
  
+
 7. <img src="https://render.githubusercontent.com/render/math?math=i'\leftarrow{argmax\{improve[i]:i\}}">
+
 8. **for** <img src="https://render.githubusercontent.com/render/math?math=i=n_g-1"> down to <img src="https://render.githubusercontent.com/render/math?math=i'+1"> **do**
+
 8.1. <img src="https://render.githubusercontent.com/render/math?math=j\leftarrow{indices[i]}">
+
 8.2. <img src="https://render.githubusercontent.com/render/math?math=s_j=-s_j">
+
 9. **end for**
+
 10. **if** <img src="https://render.githubusercontent.com/render/math?math=i'=n_g-1"> **then**
+
 10.1. <img src="https://render.githubusercontent.com/render/math?math=\Delta{Q}=0">
+
 11. **else**
+
 11.1. <img src="https://render.githubusercontent.com/render/math?math=\Delta{Q}\leftarrow{improve[i']}">
+
 12. **until** <img src="https://render.githubusercontent.com/render/math?math=\Delta{Q}"> is non positive 
 
 ## Divide a group into two
@@ -159,12 +183,19 @@ This algorithm use Algorithm 2 repeatedly in order to divide the network to grou
 1. Start with a trivial division into one group: <img src="https://render.githubusercontent.com/render/math?math=P\leftarrow\{\{0,...,n-1\}\}">
 2. Start with an empty output set of groups: O<img src="https://render.githubusercontent.com/render/math?math=\leftarrow\{\}">
 3. **Repeat** until P is empty:
+
 3.1. Remove a group g from P
+
 3.2. Divide g into g1, g2 with Algorithm 2
+
 3.3. **if** either g1 or g2 is of size 0:
+
 3.3.1. Add g to O
+
 3.4. **else**:
+
 3.4.1. Add to O: any group (g1 and/or g2) of size 1
+
 3.4.2. Add to P: any group (g1 and/or g2) larger than 1
 
 4. Output the division given by O
