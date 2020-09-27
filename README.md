@@ -70,7 +70,7 @@ We are done iterating when the change in the new vector is small enough. When al
 ## Matrix Shifting
 
 Let C be a matrix with the eigenvalues <img src="https://render.githubusercontent.com/render/math?math=\{\lambda_1,...,\lambda_n\}">, and let the 1-norm of C be the sum of its largest column: <img src="https://render.githubusercontent.com/render/math?math=||C||_1=max_j({\sum_i|C_{ij}|})">
-Let <img src="https://render.githubusercontent.com/render/math?math=C'=||C||_1\cdot{I}+C">, then C' has the same eigenvectors as C and the eigenvalues of $C'$ are $\{\lambda_1+||C||_1,...,\lambda_n+||C||_1\}$. Thus, the **dominant eigenpair** of $C'$ is <img src="https://render.githubusercontent.com/render/math?math=(\lambda_1+||C||_1, v_1)">, and the **leading eigenpair** of C is <img src="https://render.githubusercontent.com/render/math?math=(\lambda_1, v_1)">.
+Let <img src="https://render.githubusercontent.com/render/math?math=C'=||C||_1\cdot{I}+C">, then C' has the same eigenvectors as C and the eigenvalues of C' are <img src="https://render.githubusercontent.com/render/math?math=\{\lambda_1+||C||_1,...,\lambda_n+||C||_1\}">. Thus, the **dominant eigenpair** of C' is <img src="https://render.githubusercontent.com/render/math?math=(\lambda_1+||C||_1, v_1)">, and the **leading eigenpair** of C is <img src="https://render.githubusercontent.com/render/math?math=(\lambda_1, v_1)">.
 
 ## Divide to two
 ***pseudo-code*** *Algorithm 1 Divide a network into two modules*
@@ -102,21 +102,36 @@ The algorithm find a vertex v that, when moved the other group, will give the **
 2. Unmoved <img src="https://render.githubusercontent.com/render/math?math=\leftarrow\{0,1,...,n_g-1\}">
 3. <img src="https://render.githubusercontent.com/render/math?math=x\leftarrow{B[g]s}">
 3.1. **for** <img src="https://render.githubusercontent.com/render/math?math=i=0"> to <img src="https://render.githubusercontent.com/render/math?math=n_g-1"> **do**
+
 3.1.1. <img src="https://render.githubusercontent.com/render/math?math=score[i] \leftarrow{-2(s_ix_i+\frac{k_i^2}{M})}"> 
+
 3.2. **end for**
+
 4. <img src="https://render.githubusercontent.com/render/math?math=j'\leftarrow{argmax\{score[j]:j\in{Unmoved}\}}">
+
 4.1. <img src="https://render.githubusercontent.com/render/math?math=s_{j'}=-s_{j'}">
+
 4.2. <img src="https://render.githubusercontent.com/render/math?math=improve[i]\leftarrow{score[j']}">
+
 4.3. <img src="https://render.githubusercontent.com/render/math?math=Unmoved\leftarrow{Unmoved/\{j'\}}">
-5. **for** <img src="https://render.githubusercontent.com/render/math?math=i=1"> to <img src="https://render.githubusercontent.com/render/math?math=n_g-1" **do**
+
+5. **for** <img src="https://render.githubusercontent.com/render/math?math=i=1"> to <img src="https://render.githubusercontent.com/render/math?math=n_g-1"> **do**
+
 5.1. **for all** <img src="https://render.githubusercontent.com/render/math?math=k\in{Unmoved}"> **do**
+
 5.1.1. <img src="https://render.githubusercontent.com/render/math?math=score[i]\leftarrow{score[i]-4s_is_{j'}B[g]_{ij'}}">
+
 5.2. **end for**
 .
+
 5.2. <img src="https://render.githubusercontent.com/render/math?math=j'\leftarrow{argmax\{score[j]:j\in{Unmoved}\}}">
+
 5.3 <img src="https://render.githubusercontent.com/render/math?math=s_{j'}=-s_{j'}">
+
 5.4 <img src="https://render.githubusercontent.com/render/math?math=improve[i]\leftarrow{improve[i-1]+score[j']}">
+
 5.5. <img src="https://render.githubusercontent.com/render/math?math=Unmoved\leftarrow{Unmoved/\{j'\}}">
+
 6. **end for**
  .
 7. <img src="https://render.githubusercontent.com/render/math?math=i'\leftarrow{argmax\{improve[i]:i\}}">
@@ -155,11 +170,18 @@ This algorithm use Algorithm 2 repeatedly in order to divide the network to grou
 1. Start with a trivial division into one group: <img src="https://render.githubusercontent.com/render/math?math=P\leftarrow\{\{0,...,n-1\}\}">
 2. Start with an empty output set of groups: O<img src="https://render.githubusercontent.com/render/math?math=\leftarrow\{\}">
 3. **Repeat** until P is empty:
+
 3.1. Remove a group g from P
+
 3.2. Divide g into g1, g2 with Algorithm 2
+
 3.3. **if** either g1 or g2 is of size 0:
+
 3.3.1. Add g to O
+
 3.4. **else**:
+
 3.4.1. Add to O: any group (g1 and/or g2) of size 1
+
 3.4.2. Add to P: any group (g1 and/or g2) larger than 1
 4. Output the division given by O
